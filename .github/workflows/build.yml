@@ -6,14 +6,13 @@ on:
       - '**'
 
 env:
-  PHP_VERSIONS: '["7", "7.1", "7.2", "7.3", "7.4", "8", "8.0"]'
+  MATRIX: '{"php": ["7", "7.1", "7.2", "7.3", "7.4", "8", "8.0"]}'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        php: ${{ env.PHP_VERSIONS }}
+      matrix: ${{ fromJson(env.MATRIX) }}
     steps:
       - uses: actions/checkout@v2
       - name: Login to GitHub Container Registry
