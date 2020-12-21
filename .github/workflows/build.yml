@@ -24,11 +24,11 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-${{ join(matrix) }}-buildx-${{ github.sha }}
-          restore-keys: ${{ runner.os }}-${{ join(matrix) }}-buildx
+          key: ${{ runner.os }}-${{ matrix.php }}-buildx-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-${{ matrix.php }}-buildx
       - id: push
         run: |
-          echo ::set-output name=sha::sha-${GITHUB_SHA:0:7}-${{ join(matrix) }}
+          echo ::set-output name=sha::sha-${GITHUB_SHA:0:7}-${{ matrix.php }}
           echo ::set-output name=at::$(date -u +'%Y-%m-%dT%H:%M:%SZ')
       - name: Build Image
         uses: docker/build-push-action@v2

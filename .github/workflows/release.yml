@@ -13,7 +13,7 @@ jobs:
     steps:
       - id: push
         run: |
-          echo ::set-output name=sha::sha-${GITHUB_SHA:0:7}-${{ join(matrix) }}
+          echo ::set-output name=sha::sha-${GITHUB_SHA:0:7}-${{ matrix.php }}
       - name: Publish Tag
         uses: shrink/actions-docker-registry-tag@v1
         with:
