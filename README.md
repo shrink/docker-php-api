@@ -39,8 +39,9 @@ A full list of images and their digests is available in the
 
 ## PHP 7
 
-Minor versions of PHP 7 are included. A full list of available versions can be
-found via the [GitHub Container Package Registry][ghcr/shrink/docker-php-api].
+Supported versions of PHP 7 are included. A full list of available versions can
+be found via the
+[GitHub Container Package Registry][ghcr/shrink/docker-php-api].
 
 ```dockerfile
 FROM ghcr.io/shrink/docker-php-api:7
