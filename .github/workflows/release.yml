@@ -4,15 +4,12 @@ on:
   release:
     types: [created]
 
-env:
-  PHP_VERSIONS: '["7", "7.1", "7.2", "7.3", "7.4", "8", "8.0"]'
-
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php: ${{ env.PHP_VERSIONS }}
+        php: [7, 7.0, 7.1, 7.2, 7.3, 7.4, 8, 8.0]
     steps:
       - id: push
         run: |
