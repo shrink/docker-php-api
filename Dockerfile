@@ -1,4 +1,7 @@
-FROM php:7.4.10-fpm-alpine3.12
+ARG PHP_VERSION=8.0
+ARG ALPINE_VERSION=3.12
+
+FROM php:${PHP_VERSION}-fpm-alpine${ALPINE_VERSION}
 
 LABEL Maintainer="Samuel Ryan <sam@samryan.co.uk>"
 
@@ -20,5 +23,5 @@ COPY ./entrypoint.sh /
 
 ENTRYPOINT ["/sbin/tini", "--", "/entrypoint.sh"]
 
-HEALTHCHECK --interval=2s --timeout=1s --retries=3 \
+HEALTHCHECK --interval=10s --timeout=1s --retries=3 \
     CMD wget --no-verbose --tries=1 --spider http://127.0.0.1:8080/.container/status || exit 1
