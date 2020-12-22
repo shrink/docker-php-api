@@ -1,0 +1,23 @@
+name: Tag Released Images
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: ['7', '7.4', '8', '8.0']
+    steps:
+      - id: push
+        run: echo ::set-output name=sha::sha-${GITHUB_SHA:0:7}-${{ matrix.php }}
+      - name: Publish Tag
+        uses: shrink/actions-docker-registry-tag@v1
+        with:
+          registry: ghcr.io
+          token: ${{ secrets.GHCR_PAT }}
+          repository: ${{ github.repository }}
+          target: ${{ steps.push.outputs.sha }}
+          tags: ${{ matrix.php }}

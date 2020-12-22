@@ -1,8 +1,12 @@
-FROM php:7.4.10-fpm-alpine3.12
+ARG PHP=8.0
+ARG ALPINE=3.12
+
+FROM php:${PHP}-fpm-alpine${ALPINE}
 
 LABEL Maintainer="Samuel Ryan <sam@samryan.co.uk>"
 
-RUN apk --no-cache add fcgi busybox nginx tini
+ARG NGINX=~1.18
+RUN apk --no-cache add fcgi busybox nginx=$NGINX tini
 
 COPY config/nginx.conf /etc/nginx/nginx.conf
 COPY config/fastcgi.conf /etc/nginx/fastcgi.conf
@@ -20,5 +24,5 @@ COPY ./entrypoint.sh /
 
 ENTRYPOINT ["/sbin/tini", "--", "/entrypoint.sh"]
 
-HEALTHCHECK --interval=2s --timeout=1s --retries=3 \
+HEALTHCHECK --interval=10s --timeout=1s --retries=3 \
     CMD wget --no-verbose --tries=1 --spider http://127.0.0.1:8080/.container/status || exit 1
