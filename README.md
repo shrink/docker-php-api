@@ -34,18 +34,17 @@ digest to guarantee reproducibility, e.g:
 FROM ghcr.io/shrink/docker-php-api@sha256:637a6ff82d27001b8137e807f6da49d2a8c6d1e234e757945454069ebdec0720
 ```
 
-A full list of images and their digests is available in the
-[GitHub Container Registry][ghcr/shrink/docker-php-api].
-
 ## PHP Versions
 
-All [Supported Versions of PHP][php/supported-versions] are tagged as major and
-minor (e.g: `7` or `7.4`). A full list of available versions can be found via
-the [GitHub Container Registry][ghcr/shrink/docker-php-api].
+All [Supported Versions of PHP][php/supported-versions] are tagged with the
+major and minor version (e.g: `7` and `7.4`).
 
 ```dockerfile
 FROM ghcr.io/shrink/docker-php-api:7
 ```
+
+A full list of available image versions can be found in
+the [GitHub Container Registry][ghcr/shrink/docker-php-api].
 
 ## Credits
 
