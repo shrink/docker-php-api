@@ -1,11 +1,12 @@
-ARG PHP_VERSION=8.0
-ARG ALPINE_VERSION=3.12
+ARG PHP=8.0
+ARG ALPINE=3.12
 
-FROM php:${PHP_VERSION}-fpm-alpine${ALPINE_VERSION}
+FROM php:${PHP}-fpm-alpine${ALPINE}
 
 LABEL Maintainer="Samuel Ryan <sam@samryan.co.uk>"
 
-RUN apk --no-cache add fcgi busybox nginx tini
+ARG NGINX=~1.18
+RUN apk --no-cache add fcgi busybox nginx=$NGINX tini
 
 COPY config/nginx.conf /etc/nginx/nginx.conf
 COPY config/fastcgi.conf /etc/nginx/fastcgi.conf
