@@ -35,6 +35,7 @@ jobs:
         with:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
+          platforms: linux/amd64,linux/arm64
           build-args: PHP=${{ matrix.php }}
           push: true
           tags: ghcr.io/${{ github.repository }}:${{ steps.push.outputs.sha }}
