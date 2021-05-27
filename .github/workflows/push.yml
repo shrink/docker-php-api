@@ -1,0 +1,34 @@
+name: Push Docker Image To Registry
+
+on:
+  workflow_run:
+    workflows:
+      - Build Docker Image
+    types:
+      - completed
+
+jobs:
+  push-image-on-success:
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success'
+    strategy:
+      matrix:
+        php: ["7", "7.4", "8", "8.0"]
+    env:
+      image: "ghcr.io/${{ github.repository }}"
+      archive: "docker-php-api-${{ matrix.php }}.tar"
+    steps:
+      - name: Download Docker Image from build workflow
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: build.yml
+          name: "${{ env.archive }}"
+      - name: Log in to GitHub Container Registry as actor
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: "${{ github.repository_owner }}"
+          password: "${{ secrets.GHCR_PAT }}"
+      - run: docker load --input ${{ env.archive }}
+      - name: Push Docker Image to Container Registry for all tags
+        run: "docker image push --all-tags ${{ env.image }}"
