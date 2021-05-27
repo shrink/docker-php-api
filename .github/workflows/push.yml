@@ -18,6 +18,7 @@ jobs:
       image: "ghcr.io/${{ github.repository }}"
       archive: "docker-php-api-${{ matrix.php }}.tar"
     steps:
+      - uses: docker/setup-qemu-action@v1
       - name: Download Docker Image from build workflow
         uses: dawidd6/action-download-artifact@v2
         with:
