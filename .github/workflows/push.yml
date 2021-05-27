@@ -18,7 +18,6 @@ jobs:
       image: "ghcr.io/${{ github.repository }}"
       archive: "docker-php-api-${{ matrix.php }}.tar"
     steps:
-      - uses: docker/setup-qemu-action@v1
       - name: Download Docker Image from build workflow
         uses: dawidd6/action-download-artifact@v2
         with:
@@ -30,6 +29,6 @@ jobs:
           registry: ghcr.io
           username: "${{ github.repository_owner }}"
           password: "${{ secrets.GHCR_PAT }}"
-      - run: docker load --input ${{ env.archive }}
+      - run: docker import ${{ env.archive }}
       - name: Push Docker Image to Container Registry for all tags
         run: "docker image push --all-tags ${{ env.image }}"
