@@ -15,7 +15,7 @@ jobs:
       matrix:
         php: ["7", "7.4", "8", "8.0"]
     env:
-      image: "ghcr.io/${{ github.repository }}"
+      image: "ghcr.io/${{ github.repository }}:${{ matrix.php }}"
       archive: "docker-php-api-${{ matrix.php }}.tar"
     steps:
       - name: Download Docker Image from build workflow
@@ -29,6 +29,6 @@ jobs:
           registry: ghcr.io
           username: "${{ github.repository_owner }}"
           password: "${{ secrets.GHCR_PAT }}"
-      - run: docker import ${{ env.archive }}
+      - run: "docker import ${{ env.archive }} ${{ env.image }}"
       - name: Push Docker Image to Container Registry for all tags
-        run: "docker image push --all-tags ${{ env.image }}"
+        run: "docker push ${{ env.image }}"
