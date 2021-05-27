@@ -39,3 +39,4 @@ jobs:
         with:
           path: "${{ env.archive }}"
           name: "${{ env.archive }}"
+          retention-days: 7
