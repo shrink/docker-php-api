@@ -1,5 +1,5 @@
 ARG PHP=8.0
-ARG ALPINE=3.12
+ARG ALPINE=3.13
 
 FROM php:${PHP}-fpm-alpine${ALPINE}
 

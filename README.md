@@ -2,7 +2,7 @@
 
 Docker Image for PHP API applications.
 
-**Alpine** [`3.12`][alpine-3.12] + **nginx** [`1.18`][nginx-1.18] +
+**Alpine** [`3.13`][alpine-3.13] + **nginx** [`1.18`][nginx-1.18] +
 **PHP** [`8.0`][php-8.0]
 
 ```dockerfile
@@ -52,7 +52,7 @@ Optimized PHP-FPM configuration based on
 [TrafeX/docker-php-nginx][TrafeX/docker-php-nginx].
 
 [TrafeX/docker-php-nginx]: https://github.com/TrafeX/docker-php-nginx
-[alpine-3.12]: https://alpinelinux.org/posts/Alpine-3.12.0-released.html
+[alpine-3.13]: https://alpinelinux.org/posts/Alpine-3.13.0-released.html
 [nginx-1.18]: http://nginx.org/en/CHANGES-1.18
 [php-8.0]: https://www.php.net/ChangeLog-8.php#PHP_8_0
 [shrink/laravel-strict]: https://github.com/shrink/laravel-strict
