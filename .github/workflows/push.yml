@@ -15,7 +15,7 @@ jobs:
       matrix:
         php: ["7", "7.4", "8", "8.0"]
     env:
-      image: "ghcr.io/${{ github.repository }}:${{ matrix.php }}"
+      image: "ghcr.io/${{ github.repository }}"
       archive: "docker-php-api-${{ matrix.php }}.tar"
     steps:
       - name: Download Docker Image from build workflow
@@ -29,6 +29,11 @@ jobs:
           registry: ghcr.io
           username: "${{ github.repository_owner }}"
           password: "${{ secrets.GHCR_PAT }}"
-      - run: "docker import ${{ env.archive }} ${{ env.image }}"
-      - name: Push Docker Image to Container Registry for all tags
-        run: "docker push ${{ env.image }}"
+      - id: short
+        uses: benjlevesque/short-sha@v1.2
+      - name: Push Docker Image to Registry
+        run: |
+          docker import ${{ env.archive }} ${{ env.image }}:${{ env.tag }}
+          docker push --all-tags ${{ env.image }}
+        env:
+          tag: "sha-${{ steps.short.outputs.sha }}-${{ matrix.php }}"

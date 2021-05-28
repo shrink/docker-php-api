@@ -19,5 +19,5 @@ jobs:
           registry: ghcr.io
           token: "${{ secrets.GHCR_PAT }}"
           repository: "${{ github.repository }}"
-          target: "${{ steps.short.outputs.sha }}-${{ matrix.php }}"
+          target: "sha-${{ steps.short.outputs.sha }}-${{ matrix.php }}"
           tags: "${{ matrix.php }}"
