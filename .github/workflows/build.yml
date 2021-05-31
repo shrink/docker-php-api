@@ -30,12 +30,12 @@ jobs:
         id: build
         uses: docker/build-push-action@v2
         with:
-          builder: "${{ steps.buildx.outputs.name }}"
           build-args: PHP=${{ matrix.php }}
+          builder: "${{ steps.buildx.outputs.name }}"
           labels: "${{ steps.meta.outputs.labels }}"
-          outputs: "type=oci,dest=${{ env.archive }}"
-          tags: "${{ steps.meta.outputs.tags }}"
+          outputs: "type=docker,dest=${{ env.archive }}"
           platforms: "${{ steps.buildx.outputs.platforms }}"
+          tags: "${{ steps.meta.outputs.tags }}"
       - name: Upload Docker Image as pipeline artifact
         uses: actions/upload-artifact@v2
         with:
