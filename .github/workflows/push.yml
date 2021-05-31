@@ -6,6 +6,7 @@ on:
       - Build Docker Image
     types:
       - completed
+  workflow_dispatch:
 
 jobs:
   push-image-on-success:
@@ -33,5 +34,5 @@ jobs:
         uses: benjlevesque/short-sha@v1.2
       - name: Push Docker Image to Registry
         run: |
-          docker load --import ${{ env.archive }}
+          docker load --input ${{ env.archive }}
           docker push --all-tags ${{ env.image }}
