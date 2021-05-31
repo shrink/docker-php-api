@@ -33,7 +33,5 @@ jobs:
         uses: benjlevesque/short-sha@v1.2
       - name: Push Docker Image to Registry
         run: |
-          docker import ${{ env.archive }} ${{ env.image }}:${{ env.tag }}
+          docker load --import ${{ env.archive }}
           docker push --all-tags ${{ env.image }}
-        env:
-          tag: "sha-${{ steps.short.outputs.sha }}-${{ matrix.php }}"
