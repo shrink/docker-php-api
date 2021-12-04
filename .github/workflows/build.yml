@@ -6,12 +6,23 @@ on:
       - "**"
 
 jobs:
+  manifest:
+    runs-on: ubuntu-latest
+    outputs:
+      versions: |
+        {"include": ${{ steps.manifest.outputs.content }}}
+    steps:
+      - uses: juliangruber/read-file-action@v1
+        id: manifest
+        with:
+          path: "versions.json"
   build-image:
     runs-on: ubuntu-latest
+    needs:
+      - manifest
     strategy:
       fail-fast: false
-      matrix:
-        php: ["7", "7.4", "8", "8.0"]
+      matrix: ${{ fromJSON(needs.manifest.outputs.versions) }}
     env:
       image: "ghcr.io/${{ github.repository }}"
       archive: "docker-php-api-${{ matrix.php }}.tar"
@@ -23,11 +34,14 @@ jobs:
         uses: crazy-max/ghaction-docker-meta@v2
         with:
           images: "${{ env.image }}"
-          tags: "type=sha,suffix=-${{ matrix.php }}"
+          tags: "type=sha,suffix=-${{ matrix.tag }}"
       - name: Build Docker Image
         uses: docker/build-push-action@v2
         with:
-          build-args: PHP=${{ matrix.php }}
+          build-args: |
+            PHP=${{ matrix.php }}
+            ALPINE=${{ matrix.alpine }}
+            NGINX=${{ matrix.nginx }}
           labels: "${{ steps.meta.outputs.labels }}"
           outputs: "type=docker,dest=${{ env.archive }}"
           tags: "${{ steps.meta.outputs.tags }}"
