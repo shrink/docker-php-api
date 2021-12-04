@@ -15,7 +15,7 @@ jobs:
       - uses: juliangruber/read-file-action@v1
         id: manifest
         with:
-          path: "versions.json"
+          path: "images.json"
   build-image:
     runs-on: ubuntu-latest
     needs:
