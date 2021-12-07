@@ -60,4 +60,4 @@ Optimized PHP-FPM configuration based on
 [docker-digest-pinning]: https://docs.docker.com/engine/reference/commandline/pull/#pull-an-image-by-digest-immutable-identifier
 [ghcr/shrink/docker-php-api]: https://github.com/users/shrink/packages/container/package/docker-php-api
 [php/supported-versions]: https://www.php.net/supported-versions.php
-[images-manifest]: /image.json
+[images-manifest]: /images.json
