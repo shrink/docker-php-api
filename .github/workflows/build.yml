@@ -8,7 +8,7 @@ on:
 jobs:
   manifest:
     # TODO: Change @generate-images-from-manifest to @main before merge
-    uses: inkfrastructure/docker-php-api/.github/workflows/images.yml@generate-images-from-manifest
+    uses: shrink/docker-php-api/.github/workflows/images.yml@generate-images-from-manifest
   build-image:
     runs-on: ubuntu-latest
     needs:
