@@ -10,7 +10,7 @@ on:
 
 jobs:
   manifest:
-    uses: shrink/docker-php-api/.github/workflows/matrix-of-images.yml@generate-images-from-manifest
+    uses: shrink/docker-php-api/.github/workflows/matrix-of-images.yml@main
   push-image-on-success:
     runs-on: ubuntu-latest
     if: github.event.workflow_run.conclusion == 'success'
