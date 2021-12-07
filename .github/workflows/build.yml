@@ -7,22 +7,15 @@ on:
 
 jobs:
   manifest:
-    runs-on: ubuntu-latest
-    outputs:
-      versions: |
-        {"include": ${{ steps.manifest.outputs.content }}}
-    steps:
-      - uses: juliangruber/read-file-action@v1
-        id: manifest
-        with:
-          path: "images.json"
+    # TODO: Change @generate-images-from-manifest to @main before merge
+    uses: inkfrastructure/docker-php-api/.github/workflows/images.yml@generate-images-from-manifest
   build-image:
     runs-on: ubuntu-latest
     needs:
       - manifest
     strategy:
       fail-fast: false
-      matrix: ${{ fromJSON(needs.manifest.outputs.versions) }}
+      matrix: ${{ fromJSON(needs.manifest.outputs.matrix) }}
     env:
       image: "ghcr.io/${{ github.repository }}"
       archive: "docker-php-api-${{ matrix.php }}.tar"
