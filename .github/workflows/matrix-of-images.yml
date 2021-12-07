@@ -1,0 +1,22 @@
+name: "Matrix of Images to build"
+
+on:
+  workflow_call:
+    outputs:
+      matrix:
+        description: "GitHub Actions Matrix of images to build"
+        value: |
+          {"include": ${{ jobs.file.outputs.images }}}
+
+jobs:
+  file:
+    name: "Fetch images from file"
+    runs-on: "ubuntu-latest"
+    outputs:
+      images: "${{ steps.manifest.outputs.content }}"
+    steps:
+      - uses: actions/checkout@v2
+      - uses: juliangruber/read-file-action@v1
+        id: manifest
+        with:
+          path: "images.json"

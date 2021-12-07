@@ -1,4 +1,4 @@
-name: Push Docker Image To Registry
+name: "Push Docker Image To Registry"
 
 on:
   workflow_run:
@@ -9,15 +9,19 @@ on:
   workflow_dispatch:
 
 jobs:
+  manifest:
+    uses: shrink/docker-php-api/.github/workflows/matrix-of-images.yml@main
   push-image-on-success:
     runs-on: ubuntu-latest
     if: github.event.workflow_run.conclusion == 'success'
+    needs:
+      - manifest
     strategy:
-      matrix:
-        php: ["7", "7.4", "8", "8.0"]
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.manifest.outputs.matrix) }}
     env:
       image: "ghcr.io/${{ github.repository }}"
-      archive: "docker-php-api-${{ matrix.php }}.tar"
+      archive: "docker-php-api-${{ matrix.tag }}.tar"
     steps:
       - name: Download Docker Image from build workflow
         uses: dawidd6/action-download-artifact@v2
@@ -28,8 +32,8 @@ jobs:
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
-          username: "${{ github.repository_owner }}"
-          password: "${{ secrets.GHCR_PAT }}"
+          username: "${{ github.actor }}"
+          password: "${{ github.token }}"
       - id: short
         uses: benjlevesque/short-sha@v1.2
       - name: Push Docker Image to Registry

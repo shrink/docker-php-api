@@ -1,15 +1,16 @@
-name: Tag Released Images
+name: "Tag Released Images"
 
 on:
   release:
     types: [created]
 
 jobs:
+  manifest:
+    uses: shrink/docker-php-api/.github/workflows/matrix-of-images.yml@main
   build:
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        php: ["7", "7.4", "8", "8.0"]
+      matrix: ${{ fromJSON(needs.manifest.outputs.matrix) }}
     steps:
       - id: short
         uses: benjlevesque/short-sha@v1.2
@@ -17,7 +18,7 @@ jobs:
         uses: shrink/actions-docker-registry-tag@v2
         with:
           registry: ghcr.io
-          token: "${{ secrets.GHCR_PAT }}"
+          token: "${{ github.token }}"
           repository: "${{ github.repository }}"
-          target: "sha-${{ steps.short.outputs.sha }}-${{ matrix.php }}"
-          tags: "${{ matrix.php }}"
+          target: "sha-${{ steps.short.outputs.sha }}-${{ matrix.tag }}"
+          tags: "${{ matrix.tag }}"
