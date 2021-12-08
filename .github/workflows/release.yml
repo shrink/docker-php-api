@@ -14,13 +14,15 @@ jobs:
     strategy:
       matrix: ${{ fromJSON(needs.manifest.outputs.matrix) }}
     steps:
-      - id: short
-        uses: benjlevesque/short-sha@v1.2
+      - id: commit
+        uses: pr-mpt/actions-commit-hash@v1
+        with:
+          prefix: "sha-"
       - name: Publish Tag
         uses: shrink/actions-docker-registry-tag@v2
         with:
           registry: ghcr.io
           token: "${{ github.token }}"
           repository: "${{ github.repository }}"
-          target: "sha-${{ steps.short.outputs.sha }}-${{ matrix.tag }}"
+          target: "${{ steps.commit.outputs.short }}-${{ matrix.tag }}"
           tags: "${{ matrix.tag }}"
