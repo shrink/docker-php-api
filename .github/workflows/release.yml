@@ -7,8 +7,10 @@ on:
 jobs:
   manifest:
     uses: shrink/docker-php-api/.github/workflows/matrix-of-images.yml@main
-  build:
+  tag:
     runs-on: ubuntu-latest
+    needs:
+      - manifest
     strategy:
       matrix: ${{ fromJSON(needs.manifest.outputs.matrix) }}
     steps:
