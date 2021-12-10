@@ -34,8 +34,6 @@ jobs:
           registry: ghcr.io
           username: "${{ github.actor }}"
           password: "${{ github.token }}"
-      - id: short
-        uses: benjlevesque/short-sha@v1.2
       - name: Push Docker Image to Registry
         run: |
           docker load --input ${{ env.archive }}
