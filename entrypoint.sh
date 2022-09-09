@@ -1,5 +1,5 @@
 #!/bin/sh
-php-fpm -g /tmp/php-fpm.pid -F &
+php-fpm --allow-to-run-as-root -g /tmp/php-fpm.pid -F &
 
 until [ -f /tmp/php-fpm.pid ]; do usleep 10000; done
 
